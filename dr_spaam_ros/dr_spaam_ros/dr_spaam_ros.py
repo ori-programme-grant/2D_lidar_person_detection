@@ -38,7 +38,7 @@ class DrSpaamROS(Node):
         self._dets_pub = self.create_publisher(PoseArray, 'detections', 10)
         self._rviz_pub = self.create_publisher(Marker, 'rviz', 10)
         self._scan_sub = self.create_subscription(
-            LaserScan, 'scan', self._scan_callback, 10
+            LaserScan, '/stretch1/scan', self._scan_callback, 10
         )
 
     def _scan_callback(self, msg):
@@ -97,8 +97,8 @@ def detections_to_pose_array(dets_xy, dets_cls):
     pose_array = PoseArray()
     for d_xy, _ in zip(dets_xy, dets_cls):
         p = Pose()
-        p.position.x = d_xy[0]
-        p.position.y = d_xy[1]
+        p.position.x = float(d_xy[0])
+        p.position.y = float(d_xy[1])
         p.position.z = 0.0
         pose_array.poses.append(p)
     

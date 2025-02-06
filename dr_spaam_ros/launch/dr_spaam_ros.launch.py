@@ -24,18 +24,16 @@ def generate_launch_description():
                                 'config', 'dr_spaam_ros.yaml'),
         description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
 
-    declare_dr_spaam_topics_file_cmd = DeclareLaunchArgument(
-        'dr_spaam_topics_params_file',
-        default_value=os.path.join(dr_spaam_ros_path,
-                                'config', 'topics.yaml'),
-        description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
+    # declare_dr_spaam_topics_file_cmd = DeclareLaunchArgument(
+    #     'dr_spaam_topics_params_file',
+    #     default_value=os.path.join(dr_spaam_ros_path,
+    #                             'config', 'topics.yaml'),
+    #     description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
 
     dr_spaam_node = LaunchDescription([
         Node(
         parameters=[
-            #get_package_share_directory("stretch_rosnav") + '/config/stretch1_mapper_params_online_sync.yaml'
             LaunchConfiguration('dr_spaam_ros_params_file'),
-            LaunchConfiguration('dr_spaam_topics_params_file'),
         ],
         package='dr_spaam_ros',
         executable='dr_spaam_ros',
@@ -46,6 +44,5 @@ def generate_launch_description():
 
     return LaunchDescription([
       declare_dr_spaam_ros_file_cmd,
-      declare_dr_spaam_topics_file_cmd,
       dr_spaam_node,
     ])

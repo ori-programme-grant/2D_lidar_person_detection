@@ -24,12 +24,6 @@ def generate_launch_description():
                                 'config', 'dr_spaam_ros.yaml'),
         description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
 
-    # declare_dr_spaam_topics_file_cmd = DeclareLaunchArgument(
-    #     'dr_spaam_topics_params_file',
-    #     default_value=os.path.join(dr_spaam_ros_path,
-    #                             'config', 'topics.yaml'),
-    #     description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
-
     dr_spaam_node = LaunchDescription([
         Node(
         parameters=[

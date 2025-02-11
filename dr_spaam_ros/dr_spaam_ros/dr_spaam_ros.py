@@ -35,7 +35,7 @@ class DrSpaamROS(Node):
         self.panoramic_scan = self.get_parameter('panoramic_scan').value
 
     def _init(self):
-        self._dets_pub = self.create_publisher(PoseArray, 'detections', 10)
+        self._dets_pub = self.create_publisher(PoseArray, 'people_detections', 10)
         self._rviz_pub = self.create_publisher(Marker, 'rviz', 10)
         self._scan_sub = self.create_subscription(
             LaserScan, '/stretch1/scan', self._scan_callback, 10

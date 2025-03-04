@@ -1,9 +1,3 @@
-# <!-- <launch>
-#   <node pkg="dr_spaam_ros" type="node.py" name="dr_spaam_ros" output="screen">
-#     <rosparam command="load" file="$(find dr_spaam_ros)/config/dr_spaam_ros.yaml"/>
-#     <rosparam command="load" file="$(find dr_spaam_ros)/config/topics.yaml"/>
-#   </node>
-# </launch> -->
 import os
 
 from launch import LaunchDescription
@@ -23,11 +17,16 @@ def generate_launch_description():
         default_value=os.path.join(dr_spaam_ros_path,
                                 'config', 'dr_spaam_ros.yaml'),
         description='Full path to the ROS2 parameters file to use for the dr_spaam_ros node')
+    
+    declare_scan_topic_cmd = DeclareLaunchArgument(
+        'scan_topic',
+        default_value='/stretch1/scan')
 
     dr_spaam_node = LaunchDescription([
         Node(
         parameters=[
             LaunchConfiguration('dr_spaam_ros_params_file'),
+            {"scan_topic": LaunchConfiguration("scan_topic")},
         ],
         package='dr_spaam_ros',
         executable='dr_spaam_ros',
@@ -38,5 +37,6 @@ def generate_launch_description():
 
     return LaunchDescription([
       declare_dr_spaam_ros_file_cmd,
+      declare_scan_topic_cmd,
       dr_spaam_node,
     ])

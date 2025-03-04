@@ -27,18 +27,20 @@ class DrSpaamROS(Node):
         self.declare_parameter('stride', 1)
         self.declare_parameter('detector_model', 'default')
         self.declare_parameter('panoramic_scan', False)
+        self.declare_parameter('scan_topic', 'scan')
 
         self.weight_file = self.get_parameter('weight_file').value
         self.conf_thresh = self.get_parameter('conf_thresh').value
         self.stride = self.get_parameter('stride').value
         self.detector_model = self.get_parameter('detector_model').value
         self.panoramic_scan = self.get_parameter('panoramic_scan').value
+        self.scan_topic = self.get_parameter('scan_topic').value
 
     def _init(self):
         self._dets_pub = self.create_publisher(PoseArray, 'people_detections', 10)
         self._rviz_pub = self.create_publisher(Marker, 'rviz', 10)
         self._scan_sub = self.create_subscription(
-            LaserScan, '/stretch1/scan', self._scan_callback, 10
+            LaserScan, self.scan_topic, self._scan_callback, 10
         )
 
     def _scan_callback(self, msg):
